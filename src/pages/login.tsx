@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Container, Grid, Button } from '@mui/material';
 import { AccountCircle, Lock, Login as LoginIcon } from '@mui/icons-material';
-import { getUserInfo, UserInfo } from '@/api/login';
+import { getUserInfo } from '@/api/login';
 import md5 from 'js-md5';
 import style from '../styles/login.module.scss';
 
@@ -10,6 +10,15 @@ type LoginField = {
   password: string;
   isError: boolean;
   showPassword: boolean;
+};
+
+export type UserInfo = {
+  tenantId: string;
+  username: string;
+  password: string;
+  grant_type: string;
+  scope: string;
+  type: string;
 };
 
 const Login: React.FC = () => {
