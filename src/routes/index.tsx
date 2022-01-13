@@ -1,25 +1,18 @@
 import NotFound from 'pages/404';
-import { lazy, Suspense } from 'react';
+import Dashboard from 'pages/dashboard';
+import Login from 'pages/login';
 import type { RouteObject } from 'react-router-dom';
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: (
-      <Suspense fallback={<NotFound />}>
-        {lazy(() => import('pages/dashboard'))}
-      </Suspense>
-    ),
+    element: <Dashboard />,
   },
   {
     path: '/login',
-    element: (
-      <Suspense fallback={<NotFound />}>
-        {lazy(() => import('pages/login'))}
-      </Suspense>
-    ),
+    element: <Login />,
   },
-  { path: "*", element: <NotFound /> }
+  { path: '*', element: <NotFound /> },
 ];
 
 export default routes;

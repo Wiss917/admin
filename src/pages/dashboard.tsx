@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import { getApiMonitorData } from 'api/apiAnalysis';
 import { IMonitorResult } from 'interfaces/apiAnalysis';
 import {
@@ -8,28 +9,13 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
 
 type MonitorCardProp = {
   name: string;
   data: IMonitorResult[];
 };
 
-export const getMonitorCardProps = async () => {
-  const { data, msg, code, success } = await getApiMonitorData();
-
-  if (code !== 200 || !success) {
-    console.log(msg);
-  }
-
-  return {
-    props: {
-      monitorCardProps: parseMonitorApiData(data),
-    },
-  };
-};
-
-const Dashboard: React.FC<{}> = ({}) => {
+const Dashboard: React.FC<{}> = () => {
   const [monitorCardProps, setMonitorCardProps] = useState<MonitorCardProp[]>(
     []
   );
@@ -51,18 +37,19 @@ const Dashboard: React.FC<{}> = ({}) => {
 
   return (
     <div>
-      <Grid container spacing={2}>
+      hello
+      {/* <Grid container spacing={2}>
         {monitorCardProps.map((item, index) => (
           <Grid key={index} xs={4} md={12}>
-            {getCards({ cardProp: item })}
+            {Cards({ cardProp: item })}
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </div>
   );
 };
 
-const getCards: React.FC<{ cardProp: MonitorCardProp }> = ({ cardProp }) => {
+const Cards: React.FC<{ cardProp: MonitorCardProp }> = ({ cardProp }) => {
   return (
     <Card sx={{ height: 300 }}>
       <CardContent>
