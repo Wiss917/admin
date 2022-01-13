@@ -8,14 +8,14 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 type MonitorCardProp = {
   name: string;
   data: IMonitorResult[];
 };
 
-export const getStaticProps = async () => {
+export const getMonitorCardProps = async () => {
   const { data, msg, code, success } = await getApiMonitorData();
 
   if (code !== 200 || !success) {
@@ -29,9 +29,26 @@ export const getStaticProps = async () => {
   };
 };
 
-const Dashboard: React.FC<{ monitorCardProps: MonitorCardProp[] }> = ({
-  monitorCardProps,
-}) => {
+const Dashboard: React.FC<{}> = ({}) => {
+  const [monitorCardProps, setMonitorCardProps] = useState<MonitorCardProp[]>(
+    []
+  );
+  const getMonitorCardProps = useCallback(async () => {
+    const { data, msg, code, success } = await getApiMonitorData();
+
+    console.log(success ? 'ok' : 'fail');
+
+    if (code !== 200 || !success) {
+      console.log(msg);
+    }
+
+    setMonitorCardProps(parseMonitorApiData(data));
+  }, []);
+
+  useEffect(() => {
+    getMonitorCardProps();
+  }, [getMonitorCardProps]);
+
   return (
     <div>
       <Grid container spacing={2}>

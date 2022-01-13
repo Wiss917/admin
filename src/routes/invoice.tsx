@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { invoices } from 'mock/invoices';
-import { log } from 'console';
+import React from 'react';
 
-export default function Invoice() {
+const Invoice: React.FC = () => {
   let { invoiceId } = useParams();
   let invoice = invoices.find(
     ({ number }) => number === parseInt(invoiceId || '0')
@@ -22,3 +22,4 @@ export default function Invoice() {
     <div>404!</div>
   );
 }
+export default Invoice

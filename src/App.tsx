@@ -1,19 +1,13 @@
-import { Link, Outlet } from 'react-router-dom';
+import { useRoutes, Outlet } from 'react-router-dom';
+import routes from 'routes';
 import './App.css';
 
 function App() {
+  const elements = useRoutes(routes);
+
   return (
     <div>
-      hello router
-      <nav
-        style={{
-          borderBottom: 'solid 1px',
-          paddingBottom: '1rem',
-        }}
-      >
-        <Link to="/invoices">Invoices</Link> |{' '}
-        <Link to="/expenses">Expenses</Link>
-      </nav>
+      {elements}
       <Outlet />
     </div>
   );
