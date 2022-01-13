@@ -1,0 +1,17 @@
+.box {
+  width: 100vw;
+  height: 20vh;
+  background-color: khaki;
+  display: flex;
+  overflow-x: hidden;
+  :global {
+    .item {
+      width: 100vw;
+      border: 1px solid red;
+      height: 10vh;
+      flex-shrink: 0;
+      background-color: lavender;
+      transform: translateX(-50px);
+    }
+  }
+}

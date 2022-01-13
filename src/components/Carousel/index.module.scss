@@ -1,0 +1,17 @@
+.carousel {
+  height: 20vh;
+  width: 100vw;
+  display: flex;
+  overflow-x: hidden;
+  > span {
+    // nextJs img container
+    // flex-basis: 100%;
+    transform: translate(-50px);
+    flex-shrink: 0;
+  }
+  :global {
+    .img {
+      object-fit: fill;
+    }
+  }
+}
