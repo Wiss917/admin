@@ -1,4 +1,4 @@
-import { useViewSize } from '@/hooks/viewSize';
+import { useViewSize } from 'hooks/viewSize';
 import { Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import style from './index.module.scss';

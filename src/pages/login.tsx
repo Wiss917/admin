@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Container, Grid, Button } from '@mui/material';
 import { AccountCircle, Lock, Login as LoginIcon } from '@mui/icons-material';
-import { getUserInfo } from '@/api/login';
+import { getUserInfo } from 'api/login';
 import md5 from 'js-md5';
-import style from '../styles/login.module.scss';
+import style from './styles/login.module.scss';
 
 type LoginField = {
   name: string;

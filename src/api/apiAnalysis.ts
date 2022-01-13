@@ -1,10 +1,10 @@
-import { IList, IResponse } from '@/interfaces/api';
+import { IList, IResponse } from 'interfaces/api';
 import {
   IApiInfoRecord,
   IApiLogRecord,
   IMonitorResult,
-} from '@/interfaces/apiAnalysis';
-import instance from '@/utils/axios';
+} from 'interfaces/apiAnalysis';
+import instance from 'utils/axios';
 
 export const getApiMonitorData = (): Promise<IResponse<IMonitorResult[]>> =>
   instance.get('/api/apimanage/apihistory/apiMonitor', {});

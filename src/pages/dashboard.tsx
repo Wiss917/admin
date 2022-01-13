@@ -1,5 +1,5 @@
-import { getApiMonitorData } from '@/api/apiAnalysis';
-import { IMonitorResult } from '@/interfaces/apiAnalysis';
+import { getApiMonitorData } from 'api/apiAnalysis';
+import { IMonitorResult } from 'interfaces/apiAnalysis';
 import {
   Button,
   Card,
