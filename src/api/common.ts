@@ -1,5 +1,5 @@
-import { IResponse } from '@/interfaces/api';
-import instance from '@/utils/axios';
+import { IResponse } from 'interfaces/api';
+import instance from 'utils/axios';
 
 type AppDetail = {
   id: string;

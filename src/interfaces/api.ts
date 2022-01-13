@@ -1,4 +1,4 @@
-export interface IResponse<T = any> {
+export interface IResponse<T> {
   /** 状态码 */
   code: number;
   data: T;

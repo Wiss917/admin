@@ -1,11 +1,11 @@
-import { TabBar } from '@/components/TabBar';
-import { Header } from '@/components/Header';
 import React, { useEffect, useCallback, useState } from 'react';
-import { loadAppDetails, loadUserApps } from '@/api/common';
+import { loadAppDetails, loadUserApps } from 'api/common';
 import { Backdrop, CircularProgress } from '@mui/material';
-import TransitionGroupExample from '@/components/Transition';
-import { Carousel } from '@/components/Carousel';
-import style from '../styles/index.module.scss';
+import TransitionGroupExample from 'components/Transition';
+import { Carousel } from 'components/Carousel';
+import { TabBar } from 'components/TabBar';
+import { Header } from 'components/Header';
+import style from './styles/index.module.scss';
 
 interface IHomeProps {
   configs: config[];
