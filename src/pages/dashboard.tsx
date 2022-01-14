@@ -37,14 +37,13 @@ const Dashboard: React.FC<{}> = () => {
 
   return (
     <div>
-      hello
-      {/* <Grid container spacing={2}>
+      <Grid container spacing={2}>
         {monitorCardProps.map((item, index) => (
           <Grid key={index} xs={4} md={12}>
             {Cards({ cardProp: item })}
           </Grid>
         ))}
-      </Grid> */}
+      </Grid>
     </div>
   );
 };

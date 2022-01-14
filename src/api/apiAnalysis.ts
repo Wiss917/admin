@@ -21,7 +21,7 @@ export const getApiInfoList = (
   current = 1,
   size = 10
 ): Promise<IResponse<IList<IApiInfoRecord>>> =>
-  instance.get('/api/apimanage/apihistory/apiInfoList', {
+  instance.get('/apimanage/apihistory/apiInfoList', {
     params: {
       apireqtype,
       size,
