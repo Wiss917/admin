@@ -52,5 +52,6 @@
   },
   "devDependencies": {
     "@types/js-md5": "^0.4.3"
-  }
+  },
+  "proxy": "http://wangge.xcuni.com:10365/testxclife/chShow/saber/pcApi/"
 }

@@ -7,7 +7,7 @@ import {
 import instance from 'utils/axios';
 
 export const getApiMonitorData = (): Promise<IResponse<IMonitorResult[]>> =>
-  instance.get('/api/apimanage/apihistory/apiMonitor', {});
+  instance.get('/apimanage/apihistory/apiMonitor', {});
 
 /**
  *
