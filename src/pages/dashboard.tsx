@@ -6,23 +6,24 @@ import {
   Card,
   CardActions,
   CardContent,
+  Container,
   Grid,
   Typography,
 } from '@mui/material';
+
+import { defaultGradientColors } from 'constant/colors';
 
 type MonitorCardProp = {
   name: string;
   data: IMonitorResult[];
 };
 
-const Dashboard: React.FC<{}> = () => {
+const Dashboard: React.FC = () => {
   const [monitorCardProps, setMonitorCardProps] = useState<MonitorCardProp[]>(
     []
   );
   const getMonitorCardProps = useCallback(async () => {
     const { data, msg, code, success } = await getApiMonitorData();
-
-    console.log(success ? 'ok' : 'fail');
 
     if (code !== 200 || !success) {
       console.log(msg);
@@ -36,22 +37,30 @@ const Dashboard: React.FC<{}> = () => {
   }, [getMonitorCardProps]);
 
   return (
-    <div>
-      hello
-      {/* <Grid container spacing={2}>
+    <Container maxWidth="xl">
+      <Grid container spacing={2}>
+        <Grid item xs={12} sx={{ pt: 2 }}>
+          Welcome! 🙋🏻
+        </Grid>
         {monitorCardProps.map((item, index) => (
-          <Grid key={index} xs={4} md={12}>
-            {Cards({ cardProp: item })}
+          <Grid item key={index} xs={12} sm={6} md={4}>
+            <StatusCard
+              cardProp={item}
+              bgColor={defaultGradientColors[index]}
+            />
           </Grid>
         ))}
-      </Grid> */}
-    </div>
+      </Grid>
+    </Container>
   );
 };
 
-const Cards: React.FC<{ cardProp: MonitorCardProp }> = ({ cardProp }) => {
+const StatusCard: React.FC<{
+  cardProp: MonitorCardProp;
+  bgColor: string | undefined;
+}> = ({ cardProp, bgColor }) => {
   return (
-    <Card sx={{ height: 300 }}>
+    <Card sx={{ height: 300, background: bgColor }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Word of the Day

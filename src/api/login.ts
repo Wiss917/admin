@@ -1,4 +1,4 @@
-import { UserInfo } from 'pages/login';
+import { UserInfo } from 'pages/Login';
 import instance from 'utils/axios';
 import qs from 'qs';
 
