@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
 
     if (code !== 200 || !success) {
       console.log(msg);
+      
     }
 
     setMonitorCardProps(parseMonitorApiData(data));
