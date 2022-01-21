@@ -18,7 +18,7 @@ type MonitorCardProp = {
   data: IMonitorResult[];
 };
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const [monitorCardProps, setMonitorCardProps] = useState<MonitorCardProp[]>(
     []
   );
@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
 
     if (code !== 200 || !success) {
       console.log(msg);
+
     }
 
     setMonitorCardProps(parseMonitorApiData(data));

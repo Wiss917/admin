@@ -5,12 +5,37 @@ import SignInSide from 'pages/template/SignInSide';
 import SignIn from 'pages/template/SignIn';
 import SignUp from 'pages/template/SignUp';
 import Album from 'pages/template/Album';
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, RouteObject, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from 'context/authContext';
+
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const { hasLoggedIn } = useContext(AuthContext);
+  const location = useLocation();
+
+  if (!hasLoggedIn) {
+    return <Navigate to="signIn" state={{ from: location }} replace />;
+  }
+
+  return children;
+}
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Dashboard />,
+    element: (
+      <RequireAuth>
+        <Dashboard />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: 'signIn',
+    element: <SignIn />,
+  },
+  {
+    path: 'signUp',
+    element: <SignUp />,
   },
   {
     path: '/login',
@@ -24,20 +49,20 @@ const routes: RouteObject[] = [
         element: <SignInSide />,
       },
       {
-        path: 'signIn',
-        element: <SignIn />,
-      },
-      {
-        path: 'signUp',
-        element: <SignUp />,
-      },
-      {
         path: 'album',
-        element: <Album />,
+        element: (
+          <RequireAuth>
+            <Album />
+          </RequireAuth>
+        ),
       },
     ],
   },
-  { path: '*', element: <NotFound /> },
+  {
+    path: '404',
+    element: <NotFound />,
+  },
+  { path: '*', element: <Navigate to="404" /> },
 ];
 
 export default routes;
