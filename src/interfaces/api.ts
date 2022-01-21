@@ -1,9 +1,13 @@
 export interface IResponse<T> {
-  /** 状态码 */
+  /**
+   * @description http 状态码
+   */
   code: number;
   data: T;
   msg: string;
-  /** 请求是否成功 */
+  /**
+   * @description 请求是否成功
+   */
   success: boolean;
 }
 

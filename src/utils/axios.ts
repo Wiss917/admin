@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { IResponse } from 'interfaces/api';
 
 const instance = axios.create({
   baseURL: 'api',
@@ -30,11 +31,24 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse<IResponse<any>>) => {
     const { status, data } = response;
+    const hasToken = !!localStorage.getItem('token');
+    console.log(response);
+
     if (status !== 200) {
       console.log(response);
     }
+
+    const { code, success, msg } = data;
+
+    // todo 根据 code 详细打印报错信息
+    if (code === 401 || !success) {
+      console.log(hasToken ? msg : '用户没有登录！');
+      
+      // todo remove token cache redirect to log in
+    }
+
     return data;
   },
   (err) => {
