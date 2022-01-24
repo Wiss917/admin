@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { getApiMonitorData } from 'api/apiAnalysis';
 import { IMonitorResult } from 'interfaces/apiAnalysis';
 import {
@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 import { defaultGradientColors } from 'constant/colors';
+import AuthContext from 'context/authContext';
 
 type MonitorCardProp = {
   name: string;
@@ -22,16 +23,26 @@ const Dashboard = () => {
   const [monitorCardProps, setMonitorCardProps] = useState<MonitorCardProp[]>(
     []
   );
+  const { goRedirect } = useContext(AuthContext);
   const getMonitorCardProps = useCallback(async () => {
-    const { data, msg, code, success } = await getApiMonitorData();
+    try {
+      const { data, msg, code, success } = await getApiMonitorData();
 
-    if (code !== 200 || !success) {
-      console.log(msg);
+      const go = goRedirect(code);
 
+      if (go) {
+        throw new Error('redirect');
+      }
+
+      if (code !== 200 || !success) {
+        throw new Error(msg || '首页信息获取失败！');
+      }
+
+      setMonitorCardProps(parseMonitorApiData(data));
+    } catch (e) {
+      console.error(e);
     }
-
-    setMonitorCardProps(parseMonitorApiData(data));
-  }, []);
+  }, [goRedirect]);
 
   useEffect(() => {
     getMonitorCardProps();

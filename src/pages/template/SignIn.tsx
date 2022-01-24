@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   Avatar,
@@ -16,6 +16,12 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Visibility, VisibilityOff, LockOutlined } from '@mui/icons-material';
+import { useLocation } from 'react-router';
+
+type Fields = {
+  email: string;
+  password: string;
+};
 
 function Copyright(props: any) {
   return (
@@ -38,14 +44,29 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [showPassword, setShowPassword] = useState(false);
+  const { state } = useLocation();
+  const [fields, setFields] = useState<Fields>({
+    email: '',
+    password: '',
+  });
+  const [valid, setValid] = useState(true);
+  const isError = (field: keyof Fields) => !valid && !fields[field];
+
+  const handleChange =
+    (field: keyof Fields) =>
+    ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+      setFields({
+        ...fields,
+        [field]: value,
+      });
+    };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setValid(Object.values(fields).every((s) => s));
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    // todo ajax
   };
 
   return (
@@ -69,45 +90,65 @@ export default function SignIn() {
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
+            onInvalidCapture={() => {
+              setValid(false);
+            }}
+            autoComplete="off"
             sx={{ mt: 1 }}
           >
             <TextField
               margin="normal"
               required
               fullWidth
+              value={fields.email}
+              error={isError('email')}
               id="email"
               label="Email Address"
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange('email')}
             />
             <TextField
-              margin="normal"
               required
               fullWidth
+              margin="normal"
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? 'input' : 'password'}
               id="password"
               autoComplete="current-password"
+              value={fields.password}
+              error={isError('password')}
+              onChange={handleChange('password')}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
                       edge="end"
+                      onClick={() => {
+                        setShowPassword((show) => !show);
+                      }}
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  onChange={(_, checked) => {
+                    const accounts = (
+                      localStorage.getItem('accounts') || ''
+                    ).split(',');
+                  }}
+                  value="remember"
+                  color="primary"
+                />
+              }
               label="Remember me"
             />
             <Button
