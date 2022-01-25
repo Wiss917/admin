@@ -16,11 +16,22 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Visibility, VisibilityOff, LockOutlined } from '@mui/icons-material';
-import { useLocation } from 'react-router';
+import {
+  useLocation,
+  useNavigate,
+  Location as RouterLocation,
+} from 'react-router';
+import { getUserInfo } from 'api/login';
+import useCustomAlert from 'hooks/useCustomAlert';
+import md5 from 'js-md5';
 
 type Fields = {
   email: string;
   password: string;
+};
+
+type LocationState = {
+  from: RouterLocation;
 };
 
 function Copyright(props: any) {
@@ -45,6 +56,12 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [setCustomAlert, Alert] = useCustomAlert({
+    severity: 'error',
+    text: '密码错误！',
+    show: false,
+  });
+  const navigate = useNavigate();
   const { state } = useLocation();
   const [fields, setFields] = useState<Fields>({
     email: '',
@@ -62,17 +79,52 @@ export default function SignIn() {
       });
     };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    setValid(Object.values(fields).every((s) => s));
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setValid(Object.values(fields).every((s) => s));
+    const { email: username, password } = fields;
 
-    // todo ajax
+    const { access_token } = await getUserInfo({
+      tenantId: '000000',
+      username,
+      password: md5(password),
+      grant_type: 'password',
+      scope: 'all',
+      type: 'account',
+    });
+
+    if (!access_token) {
+      setCustomAlert((s) => ({
+        ...s,
+        show: true,
+      }));
+      return;
+    }
+
+    localStorage.setItem('token', access_token);
+
+    setCustomAlert(() => ({
+      text: '登陆成功！',
+      autoHideDuration: 500,
+      severity: 'success',
+      show: true,
+    }));
+
+    setTimeout(() => {
+      navigate((state as LocationState)?.from?.pathname || '/');
+    }, 500);
   };
+
+  useEffect(() => {
+    // todo remember me
+    console.log(state);
+  }, [state]);
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {Alert}
         <Box
           sx={{
             marginTop: 8,

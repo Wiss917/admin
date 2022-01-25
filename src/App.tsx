@@ -15,11 +15,11 @@ function App() {
       switch (code) {
         case 401: {
           localStorage.clear();
-          navigate('signIn', { state: location, replace: true });
+          navigate('signIn', { state: { from: location }, replace: true });
           return true;
         }
         case 500: {
-          navigate('404', { state: location, replace: true });
+          navigate('404', { state: { from: location }, replace: true });
           return true;
         }
         default:

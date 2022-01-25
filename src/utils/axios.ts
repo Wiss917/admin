@@ -32,15 +32,20 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response: AxiosResponse<IResponse<any>>) => {
-    const { data } = response;
+    const {
+      data,
+      config: { headers },
+    } = response;
     const hasToken = !!localStorage.getItem('token');
 
     const { code, success, msg } = data;
 
+    // 登录接口特殊处理
+    const isLoginApi = Object.keys(headers || {}).includes('isLogin');
+
     // todo 根据 code 详细打印报错信息
-    if (code === 401 || !success) {
+    if (!isLoginApi && (code === 401 || !success)) {
       console.log(hasToken ? msg : '用户没有登录！');
-      // todo remove token cache redirect to log in
     }
 
     return data;
