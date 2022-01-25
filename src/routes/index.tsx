@@ -13,11 +13,11 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   const { hasLoggedIn } = useContext(AuthContext);
   const location = useLocation();
 
-  if (!hasLoggedIn) {
-    return <Navigate to="signIn" state={{ from: location }} replace />;
-  }
-
-  return children;
+  return !hasLoggedIn ? (
+    <Navigate to="signIn" state={{ from: location }} replace />
+  ) : (
+    children
+  );
 }
 
 const routes: RouteObject[] = [

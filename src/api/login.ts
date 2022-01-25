@@ -5,7 +5,8 @@ import qs from 'qs';
 export function getUserInfo(data: UserInfo): Promise<{ access_token: string }> {
   return instance.post('/blade-auth/oauth/token', qs.stringify(data), {
     headers: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
+      isLogin: ''
     }
   });
 }
