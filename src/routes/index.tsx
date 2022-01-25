@@ -1,5 +1,5 @@
 import NotFound from 'pages/404';
-import Dashboard from 'pages/Dashboard1';
+import Dashboard from 'pages/Dashboard';
 import Login from 'pages/Login';
 import SignInSide from 'pages/template/SignInSide';
 import SignIn from 'pages/template/SignIn';
