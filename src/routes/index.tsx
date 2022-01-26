@@ -10,10 +10,10 @@ import { useContext } from 'react';
 import AuthContext from 'context/authContext';
 
 function RequireAuth({ children }: { children: JSX.Element }) {
-  const { hasLoggedIn } = useContext(AuthContext);
+  const { loginState } = useContext(AuthContext);
   const location = useLocation();
 
-  return !hasLoggedIn ? (
+  return !loginState ? (
     <Navigate to="signIn" state={{ from: location }} replace />
   ) : (
     children

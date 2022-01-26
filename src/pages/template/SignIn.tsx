@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   Avatar,
@@ -14,6 +14,7 @@ import {
   Checkbox,
   IconButton,
   InputAdornment,
+  Stack,
 } from '@mui/material';
 import { Visibility, VisibilityOff, LockOutlined } from '@mui/icons-material';
 import {
@@ -24,14 +25,11 @@ import {
 import { getUserInfo } from 'api/login';
 import useCustomAlert from 'hooks/useCustomAlert';
 import md5 from 'js-md5';
+import AuthContext from 'context/authContext';
 
 type Fields = {
   email: string;
   password: string;
-};
-
-type LocationState = {
-  from: RouterLocation;
 };
 
 function Copyright(props: any) {
@@ -56,6 +54,12 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [fields, setFields] = useState<Fields>({
+    email: '',
+    password: '',
+  });
+  const [valid, setValid] = useState(true);
+  const { setLoginState } = useContext(AuthContext);
   const [setCustomAlert, Alert] = useCustomAlert({
     severity: 'error',
     text: '密码错误！',
@@ -63,11 +67,7 @@ export default function SignIn() {
   });
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [fields, setFields] = useState<Fields>({
-    email: '',
-    password: '',
-  });
-  const [valid, setValid] = useState(true);
+
   const isError = (field: keyof Fields) => !valid && !fields[field];
 
   const handleChange =
@@ -111,7 +111,10 @@ export default function SignIn() {
     }));
 
     setTimeout(() => {
-      navigate((state as LocationState)?.from?.pathname || '/');
+      setLoginState(true);
+      navigate((state as { from: RouterLocation })?.from?.pathname || '/', {
+        replace: true,
+      });
     }, 500);
   };
 
@@ -125,7 +128,7 @@ export default function SignIn() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         {Alert}
-        <Box
+        <Stack
           sx={{
             marginTop: 8,
             display: 'flex',
@@ -225,7 +228,7 @@ export default function SignIn() {
               </Grid>
             </Grid>
           </Box>
-        </Box>
+        </Stack>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

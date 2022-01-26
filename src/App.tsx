@@ -31,11 +31,9 @@ function App() {
   return (
     <AuthContext.Provider
       value={{
-        hasLoggedIn: loginState,
+        loginState,
         goRedirect,
-        setLoginState: (state) => {
-          setLoginState(state);
-        },
+        setLoginState,
       }}
     >
       {elements}
