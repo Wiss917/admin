@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, SxProps, ThemeProvider } from '@mui/material/styles';
 import {
   Avatar,
   Button,
@@ -32,7 +32,7 @@ type Fields = {
   password: string;
 };
 
-function Copyright(props: any) {
+function Copyright(props: { sx: SxProps }) {
   return (
     <Typography
       variant="body2"
@@ -129,11 +129,10 @@ export default function SignIn() {
         <CssBaseline />
         {Alert}
         <Stack
+          direction="column"
+          alignItems="center"
           sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            mt: 8,
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
