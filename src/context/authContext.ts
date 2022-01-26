@@ -1,13 +1,13 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 
 interface IAuthContextType {
-  hasLoggedIn: boolean;
-  setLoginState: (state: boolean) => void;
+  loginState: boolean;
+  setLoginState: React.Dispatch<React.SetStateAction<boolean>>;
   goRedirect: (code: number) => boolean;
 }
 
 const AuthContext = createContext<IAuthContextType>({
-  hasLoggedIn: false,
+  loginState: false,
   setLoginState: () => {},
   goRedirect: (code: number) => false,
 });
