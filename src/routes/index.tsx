@@ -1,8 +1,7 @@
 import NotFound from 'pages/404';
 import Dashboard from 'pages/Dashboard';
-import Login from 'pages/Login';
 import SignInSide from 'pages/template/SignInSide';
-import SignIn from 'pages/template/SignIn';
+import SignIn from 'pages/SignIn';
 import SignUp from 'pages/template/SignUp';
 import Album from 'pages/template/Album';
 import { Navigate, RouteObject, useLocation } from 'react-router-dom';
@@ -36,10 +35,6 @@ const routes: RouteObject[] = [
   {
     path: 'signUp',
     element: <SignUp />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
   },
   {
     path: '/template',
