@@ -20,12 +20,12 @@ import { Visibility, VisibilityOff, LockOutlined } from '@mui/icons-material';
 import {
   useLocation,
   useNavigate,
-  Location as RouterLocation,
 } from 'react-router';
 import { getUserInfo } from 'api/login';
 import useCustomAlert from 'hooks/useCustomAlert';
 import md5 from 'js-md5';
 import AuthContext from 'context/authContext';
+import { IRedirectState } from 'interfaces/route';
 
 type Fields = {
   email: string;
@@ -112,7 +112,7 @@ export default function SignIn() {
 
     setTimeout(() => {
       setLoginState(true);
-      navigate((state as { from: RouterLocation })?.from?.pathname || '/', {
+      navigate((state as IRedirectState)?.from?.pathname || '/', {
         replace: true,
       });
     }, 500);
@@ -121,7 +121,19 @@ export default function SignIn() {
   useEffect(() => {
     // todo remember me
     console.log(state);
-  }, [state]);
+
+    const { alertType, msg } = state as IRedirectState;
+
+    if (alertType && msg) {
+      setCustomAlert(() => ({
+        text: msg,
+        autoHideDuration: 500,
+        severity: alertType,
+        show: true,
+      }));
+    }
+    
+  }, [state, setCustomAlert]);
 
   return (
     <ThemeProvider theme={theme}>
